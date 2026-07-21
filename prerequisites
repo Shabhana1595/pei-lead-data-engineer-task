@@ -1,0 +1,17 @@
+## Prerequisites
+
+Before running the pipeline:
+
+1. Create the schema:
+
+CREATE SCHEMA IF NOT EXISTS pei_assignment;
+
+2. Create the managed volume:
+
+CREATE VOLUME IF NOT EXISTS workspace.pei_assignment.raw_files;
+
+3. Upload the files from the `data/` directory to:
+
+/Volumes/workspace/pei_assignment/raw_files/
+
+4. Execute `run_pipeline`.
