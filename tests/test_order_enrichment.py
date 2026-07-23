@@ -34,3 +34,17 @@ def test_sub_category_not_null(spark):
     df = spark.table("pei_assignment.order_enriched")
 
     assert df.filter(col("sub_category").isNull()).count() == 0
+
+def test_profit_not_null(spark):
+    df = spark.table("workspace.pei_assignment.order_enriched")
+
+    assert df.filter("profit IS NULL").count() == 0
+
+def test_customer_name_has_no_special_characters(spark):
+    df = spark.table("workspace.pei_assignment.order_enriched")
+
+    invalid = df.filter(
+        col("customer_name").rlike("[^A-Za-z ]")
+    )
+
+    assert invalid.count() == 0

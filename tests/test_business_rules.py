@@ -98,3 +98,20 @@ def test_product_id_unique(spark):
     )
 
     assert duplicates.count() == 0
+    
+def test_expected_categories(spark):
+    expected = {
+        "Furniture",
+        "Office Supplies",
+        "Technology"
+    }
+
+    actual = {
+        r.category
+        for r in spark.table("workspace.pei_assignment.product_enriched")
+            .select("category")
+            .distinct()
+            .collect()
+    }
+
+    assert actual.issubset(expected)

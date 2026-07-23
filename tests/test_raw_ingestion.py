@@ -34,3 +34,18 @@ df = spark.table("pei_assignment.customer_raw")
 
 print(df.columns)
 df.printSchema()
+
+def test_required_columns_exist(spark):
+    df = spark.table("workspace.pei_assignment.customer_raw")
+
+    required = {
+        "customer_id",
+        "customer_name",
+        "country"
+    }
+
+    assert required.issubset(set(df.columns))
+def test_customer_id_not_null(spark):
+    df = spark.table("workspace.pei_assignment.customer_raw")
+
+    assert df.filter("customer_id IS NULL").count() == 0

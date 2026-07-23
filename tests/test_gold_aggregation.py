@@ -38,7 +38,13 @@ def test_total_profit_matches(spark):
     )
 
     assert round(order_profit, 2) == round(gold_profit, 2)
+
 def test_year_exists(spark):
     df = spark.table("pei_assignment.gold_yearly_summary")
 
     assert df.count() > 0
+
+def test_total_profit_not_null(spark):
+    df = spark.table("workspace.pei_assignment.gold_category_summary")
+
+    assert df.filter("total_profit IS NULL").count() == 0

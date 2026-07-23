@@ -71,3 +71,23 @@ def test_product_id_unique(spark):
     )
 
     assert duplicates.count() == 0
+
+def test_duplicate_customer_ids(spark):
+    duplicates = (
+        spark.table("workspace.pei_assignment.customer_enriched")
+        .groupBy("customer_id")
+        .count()
+        .filter(col("count") > 1)
+    )
+
+    assert duplicates.count() == 0
+
+def test_duplicate_product_ids(spark):
+    duplicates = (
+        spark.table("workspace.pei_assignment.product_enriched")
+        .groupBy("product_id")
+        .count()
+        .filter(col("count") > 1)
+    )
+
+    assert duplicates.count() == 0
